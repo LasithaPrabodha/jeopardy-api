@@ -1,0 +1,6 @@
+@JeopardyAPI_HostAddress = http://localhost:5189
+
+GET {{JeopardyAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
