@@ -9,7 +9,8 @@ public abstract class RepositoryBase<T>(DataContext dataContext) : IRepositoryBa
 {
     protected DataContext DataContext = dataContext;
 
-    public Task<bool> Exists(Expression<Func<T, bool>> expression) => DataContext.Set<T>().AnyAsync(expression);
+    public Task<bool> Exists(Expression<Func<T, bool>> expression) => 
+        DataContext.Set<T>().AnyAsync(expression);
 
     public IQueryable<T> FindAll(bool trackChanges) => !trackChanges ?
         DataContext.Set<T>().AsNoTracking() : DataContext.Set<T>();
