@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using Jeopardy.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Jeopardy.Core.Data;
 
 public partial class DataContext : DbContext
 {
+    protected readonly IConfiguration Configuration;
 
-    public DataContext()
+    public DataContext(IConfiguration configuration)
     {
+        Configuration = configuration;
     }
 
-    public DataContext(DbContextOptions<DataContext> options)
+
+    public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration)
         : base(options)
     {
+        Configuration = configuration;
     }
 
     public virtual DbSet<Airdate> Airdates { get; set; }
@@ -27,6 +32,11 @@ public partial class DataContext : DbContext
 
     public virtual DbSet<Document> Documents { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+        // connect to sqlite database
+        options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
