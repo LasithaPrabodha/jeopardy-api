@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeopardy.API", "Jeopardy.API\Jeopardy.API.csproj", "{A63A5EBC-3070-4206-A373-D0187F56AC47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeopardy.Core", "Jeopardy.Core\Jeopardy.Core.csproj", "{E0DE3BF6-EC23-4C67-A4FE-E95D2C1E7899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeopardy.Shared", "Jeopardy.Shared\Jeopardy.Shared.csproj", "{AA09602A-6CE0-432F-A8C0-07367F918DBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A63A5EBC-3070-4206-A373-D0187F56AC47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63A5EBC-3070-4206-A373-D0187F56AC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63A5EBC-3070-4206-A373-D0187F56AC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63A5EBC-3070-4206-A373-D0187F56AC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DE3BF6-EC23-4C67-A4FE-E95D2C1E7899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DE3BF6-EC23-4C67-A4FE-E95D2C1E7899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DE3BF6-EC23-4C67-A4FE-E95D2C1E7899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DE3BF6-EC23-4C67-A4FE-E95D2C1E7899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA09602A-6CE0-432F-A8C0-07367F918DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA09602A-6CE0-432F-A8C0-07367F918DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA09602A-6CE0-432F-A8C0-07367F918DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA09602A-6CE0-432F-A8C0-07367F918DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
