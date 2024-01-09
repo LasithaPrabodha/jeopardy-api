@@ -1,4 +1,4 @@
-namespace Jeopardy.Shared.Shared;
+namespace Jeopardy.Shared;
 
 public class CategoryParameters : RequestParameters
 {

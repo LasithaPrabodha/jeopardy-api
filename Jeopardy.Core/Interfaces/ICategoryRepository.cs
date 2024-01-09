@@ -1,9 +1,11 @@
 using Jeopardy.Core.Models;
-using Jeopardy.Core.Shared;
+using Jeopardy.Core.Repository;
+using Jeopardy.Shared;
 
 namespace Jeopardy.Core.Interfaces;
 public interface ICategoryRepository
 {
-    Task<ICollection<Category>> GetCategoriesAsync(CategoryParameters categoryParameters, bool trackChanges);
-
+    Task<PagedList<Category>> GetCategoriesAsync(CategoryParameters categoryParameters, bool trackChanges);
+    Task<Category> GetCategoryAsync(int categoryId, bool trackChanges);
+    Task<bool> CategoryExists(int categoryId);
 }

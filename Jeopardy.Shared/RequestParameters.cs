@@ -1,5 +1,5 @@
 
-namespace Jeopardy.Shared.Shared;
+namespace Jeopardy.Shared;
 
 public abstract class RequestParameters
 {
@@ -21,5 +21,5 @@ public abstract class RequestParameters
 
     public string? OrderBy { get; set; }
 
-    public string? Fields { get; set; }
+    public bool Randomize { get; set; }
 }

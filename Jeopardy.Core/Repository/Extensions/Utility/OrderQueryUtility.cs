@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace Jeopardy.Core.Repository.Extensions.Utility;
+namespace Jeopardy.Core.Repository.Utility;
 
 public static class OrderQueryBuilder
 {

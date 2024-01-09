@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Jeopardy.Core.Repository;
 
-public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+public abstract class RepositoryBase<T>(DataContext dataContext) : IRepositoryBase<T> where T : class
 {
-    protected DataContext DataContext;
+    protected DataContext DataContext = dataContext;
 
-    public RepositoryBase(DataContext dataContext) => DataContext = dataContext;
+    public Task<bool> Exists(Expression<Func<T, bool>> expression) => DataContext.Set<T>().AnyAsync(expression);
 
     public IQueryable<T> FindAll(bool trackChanges) => !trackChanges ?
         DataContext.Set<T>().AsNoTracking() : DataContext.Set<T>();

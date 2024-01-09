@@ -2,23 +2,32 @@ using Jeopardy.Core.Data;
 using Jeopardy.Core.Interfaces;
 using Jeopardy.Core.Models;
 using Jeopardy.Core.Repository.Extensions;
-using Jeopardy.Core.Shared;
+using Jeopardy.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Jeopardy.Core.Repository;
 
 public class CategoryRepository(DataContext dataContext) : RepositoryBase<Category>(dataContext), ICategoryRepository
 {
-    public async Task<ICollection<Category>> GetCategoriesAsync(CategoryParameters categoryParameters, bool trackChanges)
+    public async Task<PagedList<Category>> GetCategoriesAsync(CategoryParameters categoryParameters, bool trackChanges)
     {
-        var employees = await FindAll(trackChanges)
-               .Search(categoryParameters.SearchTerm)
-               .Sort(categoryParameters.OrderBy)
-               .ToListAsync();
+        var categories =
+              FindAll(trackChanges)
+               .Search(categoryParameters.SearchTerm ?? "")
+               .Sort(categoryParameters.OrderBy ?? "")
+               .Shuffle(categoryParameters.Randomize);
 
-        return PagedList<Category>
-            .ToPagedList(employees, categoryParameters.PageNumber, categoryParameters.PageSize);
+        return await PagedList<Category>
+            .ToPagedList(categories, categoryParameters.PageNumber, categoryParameters.PageSize);
     }
+    public async Task<Category> GetCategoryAsync(int categoryId, bool trackChanges)
+    {
+        var category = await FindByCondition(x => x.Id == categoryId, trackChanges).FirstAsync();
 
-
+        return category;
+    }
+    public async Task<bool> CategoryExists(int categoryId)
+    {
+        return await Exists(x => x.Id == categoryId);
+    }
 }

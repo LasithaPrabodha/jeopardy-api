@@ -1,4 +1,6 @@
-namespace Jeopardy.Shared.Shared;
+using Microsoft.EntityFrameworkCore;
+
+namespace Jeopardy.Core.Repository;
 
 public class PagedList<T> : List<T>
 {
@@ -17,12 +19,13 @@ public class PagedList<T> : List<T>
         AddRange(items);
     }
 
-    public static PagedList<T> ToPagedList(IEnumerable<T> source, int pageNumber, int pageSize)
+    public static async Task<PagedList<T>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
     {
         var count = source.Count();
-        var items = source
+        var items = await source
             .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize).ToList();
+            .Take(pageSize)
+            .ToListAsync();
 
         return new PagedList<T>(items, count, pageNumber, pageSize);
     }

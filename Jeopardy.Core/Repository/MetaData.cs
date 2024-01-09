@@ -1,4 +1,4 @@
-namespace Jeopardy.Shared.Shared;
+namespace Jeopardy.Core.Repository;
 
 public class MetaData
 {
