@@ -16,5 +16,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Jeopardy.Core\Jeopardy.Core.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="clues.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
