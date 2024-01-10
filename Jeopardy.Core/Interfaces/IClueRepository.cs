@@ -7,6 +7,6 @@ namespace Jeopardy.Core.Interfaces;
 public interface IClueRepository
 {
     Task<PagedList<Clue>> GetCluesAsync(ClueParameters categoryParameters, bool trackChanges);
-    Task<Clue> GetClueAsync(int categoryId, bool trackChanges);
-    Task<bool> ClueExists(int categoryId);
+    Task<Clue> GetClueAsync(int clueId, bool trackChanges);
+    Task<bool> ClueExists(int clueId);
 }

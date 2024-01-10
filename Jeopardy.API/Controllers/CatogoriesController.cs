@@ -56,7 +56,9 @@ public class CategoryController(ICategoryRepository categoryRepository, IMapper 
             return BadRequest(ModelState);
  
         var result = await _categoryRepository.GetRandomClueAsync(id, randomClueParameters,trackChanges: false);
-
+        if(result == null)
+            return NotFound();
+            
         var clue = _mapper.Map<ClueDto>(result);
  
         return Ok(clue);
