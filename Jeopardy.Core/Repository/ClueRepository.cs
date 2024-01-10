@@ -22,24 +22,6 @@ public class ClueRepository(DataContext dataContext) : RepositoryBase<Clue>(data
             .FirstAsync();
     }
 
-    public async Task<Clue> GetRandomClueAsync(RandomClueParameters randomClueParameters, bool trackChanges)
-    {
-
-        var clues = FindAll(trackChanges);
-
-        if (randomClueParameters.Value != 0)
-            clues = clues.Where(c => c.Value == randomClueParameters.Value);
-
-        if (randomClueParameters.Round != 0)
-            clues = clues.Where(c => c.Round == randomClueParameters.Round);
-
-        return await clues
-            .Include(c => c.IdNavigation)
-            .Include(c => c.GameNavigation)
-            .Shuffle(true)
-            .FirstAsync();
-    }
-
     public async Task<PagedList<Clue>> GetCluesAsync(ClueParameters clueParameters, bool trackChanges)
     {
         var clues = FindAll(trackChanges)

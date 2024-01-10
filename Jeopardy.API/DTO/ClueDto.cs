@@ -9,4 +9,6 @@ public class ClueDto
     public string Clue { get; set; } = string.Empty;
     public string Answer { get; set; } = string.Empty;
     public string? AirDate { get; set; }
+
+    public CategoryDto[] Categories { get; set; }
 }

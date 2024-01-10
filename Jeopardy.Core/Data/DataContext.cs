@@ -2,41 +2,29 @@
 using System.Collections.Generic;
 using Jeopardy.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Jeopardy.Core.Data;
 
 public partial class DataContext : DbContext
 {
-    protected readonly IConfiguration Configuration;
 
-    public DataContext(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    // public DataContext()
+    // {
 
-
-    public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration)
+    // }
+    public DataContext(DbContextOptions<DataContext> options)
         : base(options)
     {
-        Configuration = configuration;
     }
 
     public virtual DbSet<Airdate> Airdates { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<Classification> Classifications { get; set; }
-
     public virtual DbSet<Clue> Clues { get; set; }
 
     public virtual DbSet<Document> Documents { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        // connect to sqlite database
-        options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,19 +50,23 @@ public partial class DataContext : DbContext
             entity.Property(e => e.CategoryName).HasColumnName("category");
         });
 
-        modelBuilder.Entity<Classification>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("classifications");
+        // modelBuilder.Entity<Classification>(entity =>
+        // {
+        //     entity.ToTable("classifications");
 
-            entity.Property(e => e.CategoryId).HasColumnName("category_id");
-            entity.Property(e => e.ClueId).HasColumnName("clue_id");
+        //     entity.HasKey(cc => new { cc.ClueId, cc.CategoryId });
 
-            entity.HasOne(d => d.Category).WithMany().HasForeignKey(d => d.CategoryId);
+        //     entity.Property(e => e.CategoryId).HasColumnName("category_id");
+        //     entity.Property(e => e.ClueId).HasColumnName("clue_id");
 
-            entity.HasOne(d => d.Clue).WithMany().HasForeignKey(d => d.ClueId);
-        });
+        //     entity.HasOne(clue => clue.Category)
+        //         .WithMany(cat => cat.ClueCategories)
+        //         .HasForeignKey(cc => cc.ClueId);
+
+        //     entity.HasOne(cat => cat.Clue)
+        //         .WithMany(clue => clue.ClueCategories)
+        //         .HasForeignKey(cc => cc.CategoryId);
+        // });
 
         modelBuilder.Entity<Clue>(entity =>
         {
@@ -92,6 +84,14 @@ public partial class DataContext : DbContext
             entity.HasOne(d => d.IdNavigation).WithOne(p => p.ClueNavigation)
                 .HasForeignKey<Clue>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasMany(e => e.Categories)
+                .WithMany(e => e.Clues)
+                .UsingEntity(
+                    "classifications",
+                    l => l.HasOne(typeof(Category)).WithMany().HasForeignKey("category_id").HasPrincipalKey(nameof(Category.Id)),
+                    r => r.HasOne(typeof(Clue)).WithMany().HasForeignKey("clue_id").HasPrincipalKey(nameof(Clue.Id)),
+                    j => j.HasKey("clue_id", "category_id"));
         });
 
         modelBuilder.Entity<Document>(entity =>

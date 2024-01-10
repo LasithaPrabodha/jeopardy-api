@@ -30,4 +30,23 @@ public class CategoryRepository(DataContext dataContext) : RepositoryBase<Catego
     {
         return await Exists(x => x.Id == categoryId);
     }
+
+    public async Task<PagedList<Clue>> GetRandomClueAsync(int categoryId, RandomClueParameters randomClueParameters, bool trackChanges)
+    {
+        var clues = FindByCondition(x => x.Id == categoryId, trackChanges)
+                         .SelectMany(cat => cat.Clues)
+                         .Include(c => c.IdNavigation)
+                         .Include(c => c.GameNavigation)
+                         .Include(c => c.Categories)
+                         .Sort(randomClueParameters.OrderBy ?? "");
+
+        if (randomClueParameters.Value != 0)
+            clues = clues.Where(c => c.Value == randomClueParameters.Value);
+
+        if (randomClueParameters.Round != 0)
+            clues = clues.Where(c => c.Round == randomClueParameters.Round);
+
+        return await PagedList<Clue>
+                    .ToPagedList(clues, randomClueParameters.PageNumber, randomClueParameters.PageSize);
+    }
 }

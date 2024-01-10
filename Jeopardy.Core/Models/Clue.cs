@@ -16,4 +16,6 @@ public partial class Clue
     public virtual Airdate? GameNavigation { get; set; }
 
     public virtual Document IdNavigation { get; set; } = null!;
+
+    public ICollection<Category> Categories {get; set;}
 }

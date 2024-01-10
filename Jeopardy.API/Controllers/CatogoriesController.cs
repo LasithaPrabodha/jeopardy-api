@@ -46,4 +46,20 @@ public class CategoryController(ICategoryRepository categoryRepository, IMapper 
 
         return Ok(category);
     }
+    
+    [HttpGet]
+    [ProducesResponseType(200, Type = typeof(ClueDto))]
+    [Route("{id:int}/random")]
+    public async Task<IActionResult> GetRandomClue(int id, [FromQuery] RandomClueParameters randomClueParameters)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+ 
+        var cluesWithMetaData = await _categoryRepository.GetRandomClueAsync(id, randomClueParameters,trackChanges: false);
+
+        var clues = _mapper.Map<List<ClueDto>>(cluesWithMetaData);
+
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(cluesWithMetaData.MetaData));
+        return Ok(clues);
+    }
 }

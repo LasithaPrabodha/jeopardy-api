@@ -48,17 +48,5 @@ public class CluesController(IClueRepository clueRepository, IMapper mapper) : C
     }
 
 
-    [HttpGet]
-    [ProducesResponseType(200, Type = typeof(ClueDto))]
-    [Route("random")]
-    public async Task<IActionResult> GetRandomClue([FromQuery] RandomClueParameters randomClueParameters)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
- 
-        var result = await _clueRepository.GetRandomClueAsync(randomClueParameters,trackChanges: false);
-        var clue = _mapper.Map<ClueDto>(result);
-
-        return Ok(clue);
-    }
+    
 }

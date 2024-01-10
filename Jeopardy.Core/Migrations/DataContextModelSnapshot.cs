@@ -52,23 +52,6 @@ namespace Jeopardy.Core.Migrations
                     b.ToTable("categories", (string)null);
                 });
 
-            modelBuilder.Entity("Jeopardy.Core.Models.Classification", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("category_id");
-
-                    b.Property<int>("ClueId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("clue_id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ClueId");
-
-                    b.ToTable("classifications", (string)null);
-                });
-
             modelBuilder.Entity("Jeopardy.Core.Models.Clue", b =>
                 {
                     b.Property<int>("Id")
@@ -115,23 +98,19 @@ namespace Jeopardy.Core.Migrations
                     b.ToTable("documents", (string)null);
                 });
 
-            modelBuilder.Entity("Jeopardy.Core.Models.Classification", b =>
+            modelBuilder.Entity("classifications", b =>
                 {
-                    b.HasOne("Jeopardy.Core.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("clue_id")
+                        .HasColumnType("INTEGER");
 
-                    b.HasOne("Jeopardy.Core.Models.Clue", "Clue")
-                        .WithMany()
-                        .HasForeignKey("ClueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("category_id")
+                        .HasColumnType("INTEGER");
 
-                    b.Navigation("Category");
+                    b.HasKey("clue_id", "category_id");
 
-                    b.Navigation("Clue");
+                    b.HasIndex("category_id");
+
+                    b.ToTable("classifications");
                 });
 
             modelBuilder.Entity("Jeopardy.Core.Models.Clue", b =>
@@ -150,6 +129,21 @@ namespace Jeopardy.Core.Migrations
                     b.Navigation("GameNavigation");
 
                     b.Navigation("IdNavigation");
+                });
+
+            modelBuilder.Entity("classifications", b =>
+                {
+                    b.HasOne("Jeopardy.Core.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("category_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jeopardy.Core.Models.Clue", null)
+                        .WithMany()
+                        .HasForeignKey("clue_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Jeopardy.Core.Models.Airdate", b =>
