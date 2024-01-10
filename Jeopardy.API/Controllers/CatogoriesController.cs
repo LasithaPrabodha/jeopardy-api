@@ -55,11 +55,10 @@ public class CategoryController(ICategoryRepository categoryRepository, IMapper 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
  
-        var cluesWithMetaData = await _categoryRepository.GetRandomClueAsync(id, randomClueParameters,trackChanges: false);
+        var result = await _categoryRepository.GetRandomClueAsync(id, randomClueParameters,trackChanges: false);
 
-        var clues = _mapper.Map<List<ClueDto>>(cluesWithMetaData);
-
-        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(cluesWithMetaData.MetaData));
-        return Ok(clues);
+        var clue = _mapper.Map<ClueDto>(result);
+ 
+        return Ok(clue);
     }
 }
