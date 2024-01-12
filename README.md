@@ -81,7 +81,7 @@ Base URL: https://jeopardy-api.azurewebsites.net/
 
 ## Data Models
 
-### CategoryDto
+### CategoryResponse
 ```json
 {
   "id": 1,
@@ -89,7 +89,7 @@ Base URL: https://jeopardy-api.azurewebsites.net/
 }
 ```
 
-### ClueDto
+### ClueResponse
 ```json
 {
   "id": 1,
