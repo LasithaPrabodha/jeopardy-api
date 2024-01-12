@@ -1,7 +1,9 @@
 # Jeopardy.API
 
 ## Overview
-Welcome to Jeopardy.API! This API provides endpoints to retrieve information about Jeopardy game categories and clues. Below is a guide on how to use these endpoints to integrate the API into your project.
+ This API provides endpoints to retrieve information about Jeopardy game categories and clues. Below is a guide on how to use these endpoints to integrate the API into your project.
+
+All information were scraped from [J-Archive](https://www.j-archive.com/).
 
 > Please note this project is still under development.
 
